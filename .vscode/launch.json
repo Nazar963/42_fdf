@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Program",
+            "cwd": "${workspaceFolder}",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args":["include/maps/test_maps/42.fdf"],
+            "setupCommands":[
+                {
+                    "description": "Additional libs for gdb",
+                    "text": "set solib-search-path sharedLibraryPath/lib"
+                }
+            ]
+            // "additionalSOLibSearchPath": "/home/loco/42_fdf/libft/libft.a; /home/loco/42_fdf/mlx_linux/libmlx.a; /home/loco/42_fdf/gnl/get_next_line.a",
+        }
+    ]
+}
