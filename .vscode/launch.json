@@ -1,0 +1,16 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cppdbg",
+            "request": "launch",
+            "name": "Launch Program",
+            "args":["maps/test_maps/nizz.fdf"],
+            "cwd": "${workspaceFolder}",   
+            "program": "/home/nazar/42_fdf-1-/a.out"
+        }
+    ]
+}
