@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:19:12 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/26 18:15:24 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:19:42 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,36 @@ int		get_width(char *path)
 	return (holder);
 }
 
-void	fill(int *num_line, char *line)
+void	fill(int *num_line, int *color_line, char *line)
 {
 	char	**res;
+	char	**helper_color;
 	int		i;
+	int		j;
 
 	res = ft_split(line, ' ');
 	i = 0;
+	j = 0;
 	while (res[i])
 	{
-		num_line[i] = ft_atoi(res[i]);
-		free(res[i]);
+		if (ft_strchr(res[i], ',') != NULL)
+		{
+			helper_color = ft_split(res[i], ',');
+			num_line[i] = ft_atoi(helper_color[0]);
+			color_line[i] = ft_atoi_base(helper_color[1], 16);
+			while (helper_color[j])
+			{
+				free(helper_color[j]);
+				j++;
+			}
+			free(helper_color);
+		}
+		else
+		{
+			num_line[i] = ft_atoi(res[i]);
+			color_line[i] = 0;
+			free(res[i]);
+		}
 		i++;
 	}
 	free(res);
@@ -78,19 +97,24 @@ void    open_file(char *path, t_data *loco)
 	loco->height = get_height(path);
 	loco->width = get_width(path);
 	loco->grid = (int **)malloc((loco->height + 1) * sizeof(int*));
+	loco->color_grid = (int **)malloc((loco->height + 1) * sizeof(int*));
 	i = 0;
 	while (i <= loco->height)
 		loco->grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
+	i = 0;
+	while (i <= loco->height)
+		loco->color_grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		exit(EXIT_FAILURE);
 	i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		fill(loco->grid[i], line);
+		fill(loco->grid[i], loco->color_grid[i], line);
 		free(line);
 		i++;
 	}
 	close(fd);
 	loco->grid[i] = NULL;
+	loco->color_grid[i] = NULL;
 }
