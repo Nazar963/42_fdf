@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/31 13:05:52 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/01/31 16:09:08 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco, t_color color)
 	max = max_num(mod(x_delta), mod(y_delta));
 	x_delta /= max;
 	y_delta /= max;
-	color_manage(16711680, color);
 	while ((int)(xs - xe) || (int)(ys - ye))
 	{
 		color.red_i = color.red_start + (color.red_end - color.red_start) * i / 10;
