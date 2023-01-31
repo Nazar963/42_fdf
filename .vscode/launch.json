@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "args":["maps/test_maps/nizz.fdf"],
             "cwd": "${workspaceFolder}",   
-            "program": "/home/nazar/42_fdf-1-/a.out"
+            "program": "${workspaceFolder}/a.out"
         }
     ]
 }
