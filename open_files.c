@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:19:12 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/30 10:19:42 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/01 20:25:51 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int     get_height(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
+	{
+		return (0);
 		exit(EXIT_FAILURE);
+	}
 	height = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -41,7 +44,10 @@ int		get_width(char *path)
 	holder = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
+	{
+		return(0);
 		exit(EXIT_FAILURE);
+	}
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		width = counter(line, ' ');
@@ -76,6 +82,7 @@ void	fill(int *num_line, int *color_line, char *line)
 				j++;
 			}
 			free(helper_color);
+			free(res[i]);
 		}
 		else
 		{
@@ -96,17 +103,50 @@ void    open_file(char *path, t_data *loco)
 
 	loco->height = get_height(path);
 	loco->width = get_width(path);
+	if (loco->height == 0 || loco->width == 0)
+	{
+		ft_close(loco);
+		exit(EXIT_FAILURE);
+	}
 	loco->grid = (int **)malloc((loco->height + 1) * sizeof(int*));
+	if (!loco->grid)
+	{
+		ft_close(loco);
+		exit(EXIT_FAILURE);
+	}
 	loco->color_grid = (int **)malloc((loco->height + 1) * sizeof(int*));
+	if (!loco->color_grid)
+	{
+		ft_close(loco);
+		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	while (i <= loco->height)
+	{
 		loco->grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
+		if (!loco->grid[i - 1])
+		{
+			ft_close(loco);
+			exit(EXIT_FAILURE);
+		}
+	}
 	i = 0;
 	while (i <= loco->height)
+	{
 		loco->color_grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
+		if (!loco->color_grid[i - 1])
+		{
+			ft_close(loco);
+			exit(EXIT_FAILURE);
+		}
+	}
+
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
+	{
+		ft_close(loco);
 		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/31 15:58:25 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/01 20:26:09 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int     get_height(char *path);
 int	counter(char *str, char c);
 int	ft_atoi_base(const char *str, int base);
 
+int	ft_close(t_data *loco);
 int	deal_key(int key, t_data *loco);
 int	main(int ac, char **av);
 

@@ -6,15 +6,41 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/31 20:57:11 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/01 21:56:36 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_close(void *param)
+int	ft_close(t_data *loco)
 {
-	(void)param;
+	int	i;
+
+	i = 0;
+	if (loco->grid)
+	{
+		while (loco->grid[i])
+		{
+			free(loco->grid[i]);
+			i++;
+		}
+		free(loco->grid);
+	}
+	i = 0;
+	if (loco->color_grid)
+	{
+		while (loco->color_grid[i])
+		{
+			free(loco->color_grid[i]);
+			i++;
+		}
+		free(loco->color_grid);
+	}
+	mlx_destroy_window(loco->mlx, loco->win);
+	mlx_destroy_display(loco->mlx);
+	free(loco->mlx);
+	free(loco->win);
+	free(loco);
 	exit(0);
 }
 
@@ -34,10 +60,11 @@ int	deal_key(int key, t_data *loco)
 	{
 		mlx_clear_window(loco->mlx, loco->win);
 		mlx_destroy_window(loco->mlx, loco->win);
+		mlx_destroy_display(loco->mlx);
+		ft_close(loco);
 	}
 	mlx_clear_window(loco->mlx, loco->win);
 	manage_points(loco);
-
 	return (0);
 }
 
@@ -47,12 +74,22 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		exit(EXIT_FAILURE);
 	loco = (t_data *)malloc(sizeof(t_data));
-	// if (!loco)
-	// 	return (NULL);
+	if (!loco)
+		exit(EXIT_FAILURE);
 	open_file(av[1], loco);
 	loco->mlx = mlx_init();
+	if (!loco->mlx)
+	{
+		free(loco);
+		exit(EXIT_FAILURE);
+	}
 	loco->win = mlx_new_window(loco->mlx, 1000, 1000, "fdf");
-	loco->zoom = 1;
+	if (!loco->win)
+	{
+		free(loco);
+		exit(EXIT_FAILURE);
+	}
+	loco->zoom = 40;
 	manage_points(loco);
 	// int i;
 	// int j;
