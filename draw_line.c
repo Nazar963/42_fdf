@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/01 19:16:24 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:10:07 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	y_delta /= max;
 	while ((int)(xs - xe) || (int)(ys - ye))
 	{
-		mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
+		// mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
+		my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
 	}

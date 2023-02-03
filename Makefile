@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 20:01:55 by naal-jen          #+#    #+#              #
-#    Updated: 2023/01/31 16:06:43 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/02/02 22:41:34 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,10 @@ $(NAME): $(OFILES)
 	$(AFLAGS) $(NAME) $(OFILES)
 
 $(OFILES): $(CFILES)
-	$(CC) -c $(WFLAGS) $(CFILES)
+	$(CC) -g -c $(WFLAGS) $(CFILES)
 
 compile:
-	$(CC) -g $(OFILES) gnl/get_next_line.a libft/libft.a minilibx-linux/libmlx.a $(MFLAGS)
+	$(CC) $(OFILES) gnl/get_next_line.a libft/libft.a minilibx-linux/libmlx.a $(MFLAGS)
 
 clean:
 	cd gnl; \
