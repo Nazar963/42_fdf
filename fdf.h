@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/03 11:00:45 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:21:55 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ typedef struct s_data
 	int		line_length;
 	int		endian;
 }			t_data;
-
-typedef struct	s_mlxvars
-{
-	t_data	*img;
-}				t_mlxvars;
 
 void    open_file(char *path, t_data *loco);
 void	fill(int *num_line, int *color_line, char *line);

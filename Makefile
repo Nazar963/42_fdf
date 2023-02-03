@@ -6,14 +6,14 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 20:01:55 by naal-jen          #+#    #+#              #
-#    Updated: 2023/02/02 22:41:34 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/02/03 17:59:24 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 WFLAGS = -Wall -Werror -Wextra
 AFLAGS = ar cr
-MFLAGS = -Imlx -lXext -lX11 -lm -lz
+MFLAGS = -Imlx -lXext -lX11 -lm -lz 
 CFILES = main.c open_files.c utils.c draw_line.c
 OFILES = main.o open_files.o utils.o draw_line.o
 NAME = fdf.a

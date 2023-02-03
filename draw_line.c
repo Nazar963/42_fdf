@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/03 11:10:07 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:31:27 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,26 @@ void	isometric_projection(float *x, float *y, int z)
 	*x = (*x - *y) * cos(0.9);
 	*y = (*x + *y) * sin(0.9) - z;
 }
+
+// static void	shift_image(t_data *loco, float *x, float *y)
+// {
+// 	int		offset_x;
+// 	int		offset_y;
+
+// 	offset_x = 0;
+// 	offset_y = 0;
+// 	if (*x < 0)
+// 	{
+// 		offset_x = (int)fabs(*x);
+// 	}
+// 	if (*y < 0)
+// 	{
+// 		offset_y = (int)fabs(*y);
+// 	}
+// 	loco->addr += offset_y * loco->line_length + offset_x * (loco->bpp / 8);
+// 	*x = offset_x;
+// 	*y = offset_y;
+// }
 
 void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 {
@@ -82,8 +102,10 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	y_delta /= max;
 	while ((int)(xs - xe) || (int)(ys - ye))
 	{
-		// mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
-		my_mlx_pixel_put(loco, xs, ys, loco->color);
+		mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
+		// if (xs < 0 || ys < 0)
+		// 	shift_image(loco, &xs, &ys);
+		// my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
 	}
@@ -97,10 +119,10 @@ void	manage_points(t_data *loco)
 	y = 0;
 	while (y < loco->height)
 	{
-		x = 0;
-		while (x < loco->width)
+		x = 100;
+		while (x < (loco->width + 100))
 		{
-			if (x < loco->width - 1)
+			if (x < ((loco->width + 100) - 1))
 				draw(x, y, x + 1, y, loco);
 			if (y < loco->height - 1)
 				draw(x, y, x, y + 1, loco);

@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/03 11:03:07 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:27:40 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,20 @@ int	deal_key(int key, t_data *loco)
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
-{
-	char	*dst;
+// void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
+// {
+// 	char	*dst;
 
-	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
-	*(unsigned int*)dst = color;
-}
+// 	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
+// 	*(unsigned int*)dst = color;
+// }
 
 int	main(int ac, char **av)
 {
 	t_data	*loco;
-	t_mlxvars *meta;
 
 	if (ac != 2)
 		exit(EXIT_FAILURE);
-	meta = (t_mlxvars *)malloc(sizeof(t_mlxvars));
-	meta->img = (t_data *) malloc(sizeof(t_data));
 	loco = (t_data *)malloc(sizeof(t_data));
 	if (!loco)
 		exit(EXIT_FAILURE);
@@ -113,7 +110,7 @@ int	main(int ac, char **av)
 
 	loco->zoom = 40;
 	manage_points(loco);
-	mlx_put_image_to_window(loco->mlx, loco->win, meta->img->img, 0, 0);
+	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
 	// int i;
 	// int j;
 	// i = 0;
