@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/03 21:27:40 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/04 09:34:38 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,18 @@ int	deal_key(int key, t_data *loco)
 		// ft_close(loco);
 	}
 	mlx_clear_window(loco->mlx, loco->win);
+	loco->shifter_check = 1;
 	manage_points(loco);
 	return (0);
 }
 
-// void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
-// {
-// 	char	*dst;
+void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
+{
+	char	*dst;
 
-// 	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
-// 	*(unsigned int*)dst = color;
-// }
+	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
+	*(unsigned int*)dst = color;
+}
 
 int	main(int ac, char **av)
 {
@@ -99,13 +100,13 @@ int	main(int ac, char **av)
 		free(loco);
 		exit(EXIT_FAILURE);
 	}
-	loco->win = mlx_new_window(loco->mlx, 1000, 1000, "/|/|<<");
+	loco->win = mlx_new_window(loco->mlx, WIDTH, HEIGHT, "/|/|<<");
 	if (!loco->win)
 	{
 		free(loco);
 		exit(EXIT_FAILURE);
 	}
-	loco->img = mlx_new_image(loco->mlx, 1000, 1000);
+	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
 
 	loco->zoom = 40;

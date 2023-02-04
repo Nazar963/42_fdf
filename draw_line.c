@@ -6,27 +6,27 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/03 21:31:27 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/04 10:15:48 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int	max_num(float a, float b)
-{
-	if (a > b)
-		return (a);
-	else
-		return (b);
-}
+// static int	max_num(float a, float b)
+// {
+// 	if (a > b)
+// 		return (a);
+// 	else
+// 		return (b);
+// }
 
-static int mod(float a)
-{
-	if (a < 0)
-		return (-a);
-	else
-		return (a);
-}
+// static int mod(float a)
+// {
+// 	if (a < 0)
+// 		return (-a);
+// 	else
+// 		return (a);
+// }
 
 void	isometric_projection(float *x, float *y, int z)
 {
@@ -93,21 +93,46 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	ys += loco->shift_y;
 	xe += loco->shift_x;
 	ye += loco->shift_y;
+	//----------center---------
+	// if (loco->shifter_check == 0)
+	// {
+	// 	xs += 500;
+	// 	ys += 500;
+	// 	xe += 500;
+	// 	ye += 500;
+	// }
+
 	
 	x_delta = xe - xs;
 	y_delta = ye - ys;
 
-	max = max_num(mod(x_delta), mod(y_delta));
+	// max = max_num(mod(x_delta), mod(y_delta));
+	if (fabsf(x_delta) > fabs(y_delta))
+		max = fabsf(x_delta);
+	else
+		max = fabs(y_delta);
 	x_delta /= max;
 	y_delta /= max;
 	while ((int)(xs - xe) || (int)(ys - ye))
 	{
-		mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
+		// mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
 		// if (xs < 0 || ys < 0)
 		// 	shift_image(loco, &xs, &ys);
-		// my_mlx_pixel_put(loco, xs, ys, loco->color);
+		my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
+		if (xs < 0 || ys < 0)
+		{
+			loco->shift_y += 40;
+			loco->shift_x += 40;
+			loco->zoom -= 5;
+			draw(xs, ys, xe, ye, loco);
+			// manage_points(loco);
+		}
+		// if (xs < 0 || ys < 0)
+		// 	break ;
+		// if (xs > WIDTH || ys > HEIGHT)
+		// 	break ;
 	}
 }
 
@@ -119,10 +144,10 @@ void	manage_points(t_data *loco)
 	y = 0;
 	while (y < loco->height)
 	{
-		x = 100;
-		while (x < (loco->width + 100))
+		x = 0;
+		while (x < loco->width)
 		{
-			if (x < ((loco->width + 100) - 1))
+			if (x < loco->width - 1)
 				draw(x, y, x + 1, y, loco);
 			if (y < loco->height - 1)
 				draw(x, y, x, y + 1, loco);
