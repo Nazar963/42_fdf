@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/04 09:33:14 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:06:27 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_data
 
 	int		bpp;
 	int		line_length;
+	int		shift_check;
 	int		endian;
-	int		shifter_check;
 }			t_data;
 
 void    open_file(char *path, t_data *loco);

@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/04 09:34:38 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:37:24 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int	ft_close(t_data *loco)
 
 int	deal_key(int key, t_data *loco)
 {
-	// printf("%d\n", key);
+	printf("%d\n", key);
+	// if (key == 65293)
+	// 	printf("hello\n");
 	mlx_hook(loco->win, 17, 0, ft_close, loco);
 	if (key == 119)
 		loco->shift_y -= 40;
@@ -71,7 +73,6 @@ int	deal_key(int key, t_data *loco)
 		// ft_close(loco);
 	}
 	mlx_clear_window(loco->mlx, loco->win);
-	loco->shifter_check = 1;
 	manage_points(loco);
 	return (0);
 }
@@ -81,6 +82,7 @@ void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
 	char	*dst;
 
 	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
+
 	*(unsigned int*)dst = color;
 }
 
@@ -93,52 +95,16 @@ int	main(int ac, char **av)
 	loco = (t_data *)malloc(sizeof(t_data));
 	if (!loco)
 		exit(EXIT_FAILURE);
+	loco->shift_check = 0;
 	open_file(av[1], loco);
 	loco->mlx = mlx_init();
-	if (!loco->mlx)
-	{
-		free(loco);
-		exit(EXIT_FAILURE);
-	}
 	loco->win = mlx_new_window(loco->mlx, WIDTH, HEIGHT, "/|/|<<");
-	if (!loco->win)
-	{
-		free(loco);
-		exit(EXIT_FAILURE);
-	}
 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-
+	// mlx_hook(meta->win, 2, 1L<<0, ft_key_press, (void *)meta);
 	loco->zoom = 40;
 	manage_points(loco);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
-	// int i;
-	// int j;
-	// i = 0;
-	// while (i < loco->height)
-	// {
-	// 	j = 0;
-	// 	while (j < loco->width)
-	// 	{
-	// 		printf("%d  ", loco->grid[i][j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// }
-	// printf("\n");
-	// i = 0;
-	// while (i < loco->height)
-	// {
-	// 	j = 0;
-	// 	while (j < loco->width)
-	// 	{
-	// 		printf("%d  ", loco->color_grid[i][j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// }
 	mlx_key_hook(loco->win, deal_key, loco);
 	mlx_loop(loco->mlx);
 }
