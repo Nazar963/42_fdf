@@ -6,17 +6,17 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/04 21:37:24 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:48:50 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// static int	close_me(void *param)
-// {
-// 	(void)param;
-// 	exit(0);
-// }
+static int	close_me(void *param)
+{
+	(void)param;
+	exit(0);
+}
 
 int	ft_close(t_data *loco)
 {
@@ -53,9 +53,6 @@ int	ft_close(t_data *loco)
 int	deal_key(int key, t_data *loco)
 {
 	printf("%d\n", key);
-	// if (key == 65293)
-	// 	printf("hello\n");
-	mlx_hook(loco->win, 17, 0, ft_close, loco);
 	if (key == 119)
 		loco->shift_y -= 40;
 	if (key == 115)
@@ -69,10 +66,12 @@ int	deal_key(int key, t_data *loco)
 		mlx_clear_window(loco->mlx, loco->win);
 		mlx_destroy_window(loco->mlx, loco->win);
 		mlx_destroy_display(loco->mlx);
+		ft_close(loco);
 		exit(0);
-		// ft_close(loco);
 	}
-	mlx_clear_window(loco->mlx, loco->win);
+	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
+	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
+	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
 	manage_points(loco);
 	return (0);
 }
@@ -82,7 +81,6 @@ void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
 	char	*dst;
 
 	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
-
 	*(unsigned int*)dst = color;
 }
 
@@ -101,10 +99,11 @@ int	main(int ac, char **av)
 	loco->win = mlx_new_window(loco->mlx, WIDTH, HEIGHT, "/|/|<<");
 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-	// mlx_hook(meta->win, 2, 1L<<0, ft_key_press, (void *)meta);
 	loco->zoom = 40;
 	manage_points(loco);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
-	mlx_key_hook(loco->win, deal_key, loco);
+	mlx_hook(loco->win, 17, 0L, close_me, loco);
+	mlx_hook(loco->win, 2, 1L<<0, deal_key, loco);
+	// mlx_key_hook(loco->win, deal_key, loco);
 	mlx_loop(loco->mlx);
 }

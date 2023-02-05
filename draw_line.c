@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/04 21:05:15 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:56:52 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,10 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	xe += loco->shift_x;
 	ye += loco->shift_y;
 	//----------center---------
-	if (loco->shift_check == 0)
-	{
-		xs += 500;
-		ys += 500;
-		xe += 500;
-		ye += 500;
-	}
+	xs += 500;
+	ys += 0;
+	xe += 500;
+	ye += 0;
 
 	
 	x_delta = xe - xs;
@@ -119,10 +116,10 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 		my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
-		// if (xs < 0 || ys < 0)
-		// 	break ;
-		// if (xs > WIDTH || ys > HEIGHT)
-		// 	break ;
+		if (xs < 0 || ys < 0)
+			break ;
+		if (xs > WIDTH || ys > HEIGHT)
+			break ;
 	}
 }
 
