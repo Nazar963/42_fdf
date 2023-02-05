@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/04 21:06:27 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:48:00 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define WIDTH 1000
-#define HEIGHT 1000
+#define WIDTH 1920
+#define HEIGHT 1080
 
 typedef struct s_data
 {
@@ -54,6 +54,12 @@ typedef struct s_data
 	int		endian;
 }			t_data;
 
+typedef struct s_zoom
+{
+	int		zoom;
+	int		height;
+	int		width;
+}			t_zoom;
 void    open_file(char *path, t_data *loco);
 void	fill(int *num_line, int *color_line, char *line);
 int		get_width(char *path);
@@ -65,6 +71,7 @@ int	ft_atoi_base(const char *str, int base);
 int	ft_close(t_data *loco);
 int	deal_key(int key, t_data *loco);
 void	my_mlx_pixel_put(t_data *loco, int x, int y, int color);
+void	zoom_check(t_zoom *zoom);
 int	main(int ac, char **av);
 
 void	draw(float xs, float ys, float xe, float ye, t_data *loco);

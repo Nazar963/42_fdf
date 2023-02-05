@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 20:01:55 by naal-jen          #+#    #+#              #
-#    Updated: 2023/02/04 21:11:01 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/02/05 17:40:55 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,7 @@ $(OFILES): $(CFILES)
 	$(CC) -g -c $(WFLAGS) $(CFILES)
 
 compile:
-	$(CC) $(OFILES) gnl/get_next_line.a libft/libft.a minilibx-linux/libmlx.a $(MFLAGS); \
-	./a.out maps/test_maps/42.fdf
+	$(CC) $(OFILES) gnl/get_next_line.a libft/libft.a minilibx-linux/libmlx.a $(MFLAGS)
 
 clean:
 	cd gnl; \

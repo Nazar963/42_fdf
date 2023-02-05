@@ -6,53 +6,33 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/05 09:56:52 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:58:49 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// static int	max_num(float a, float b)
-// {
-// 	if (a > b)
-// 		return (a);
-// 	else
-// 		return (b);
-// }
+static int	max_num(float a, float b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
 
-// static int mod(float a)
-// {
-// 	if (a < 0)
-// 		return (-a);
-// 	else
-// 		return (a);
-// }
+static int mod(float a)
+{
+	if (a < 0)
+		return (-a);
+	else
+		return (a);
+}
 
 void	isometric_projection(float *x, float *y, int z)
 {
 	*x = (*x - *y) * cos(0.9);
 	*y = (*x + *y) * sin(0.9) - z;
 }
-
-// static void	shift_image(t_data *loco, float *x, float *y)
-// {
-// 	int		offset_x;
-// 	int		offset_y;
-
-// 	offset_x = 0;
-// 	offset_y = 0;
-// 	if (*x < 0)
-// 	{
-// 		offset_x = (int)fabs(*x);
-// 	}
-// 	if (*y < 0)
-// 	{
-// 		offset_y = (int)fabs(*y);
-// 	}
-// 	loco->addr += offset_y * loco->line_length + offset_x * (loco->bpp / 8);
-// 	*x = offset_x;
-// 	*y = offset_y;
-// }
 
 void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 {
@@ -94,20 +74,20 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	xe += loco->shift_x;
 	ye += loco->shift_y;
 	//----------center---------
-	xs += 500;
+	xs += 950;
 	ys += 0;
-	xe += 500;
+	xe += 950;
 	ye += 0;
 
 	
 	x_delta = xe - xs;
 	y_delta = ye - ys;
 
-	// max = max_num(mod(x_delta), mod(y_delta));
-	if (fabsf(x_delta) > fabs(y_delta))
-		max = fabsf(x_delta);
-	else
-		max = fabs(y_delta);
+	max = max_num(mod(x_delta), mod(y_delta));
+	// if (fabsf(x_delta) > fabs(y_delta))
+	// 	max = fabsf(x_delta);
+	// else
+	// 	max = fabs(y_delta);
 	x_delta /= max;
 	y_delta /= max;
 	while ((int)(xs - xe) || (int)(ys - ye))
@@ -117,9 +97,22 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 		xs += x_delta;
 		ys += y_delta;
 		if (xs < 0 || ys < 0)
-			break ;
+		{
+			loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
+			loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
+			loco->zoom -= 1;
+			// mlx_clear_window(loco->mlx, loco->win);
+			manage_points(loco);
+		}
 		if (xs > WIDTH || ys > HEIGHT)
-			break ;
+		{
+			loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
+			loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
+			loco->zoom -= 1;
+			// mlx_clear_window(loco->mlx, loco->win);
+			manage_points(loco);
+		}
+
 	}
 }
 
