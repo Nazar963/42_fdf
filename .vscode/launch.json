@@ -8,7 +8,7 @@
             "type": "cppdbg",
             "request": "launch",
             "name": "Launch Program",
-            "args":["maps/test_maps/42.fdf"],
+            "args":["maps/test_maps/mars.fdf"],
             "cwd": "${workspaceFolder}",   
             "program": "${workspaceFolder}/a.out"
         }

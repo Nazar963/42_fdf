@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/05 21:58:49 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:33:41 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,51 @@ void	isometric_projection(float *x, float *y, int z)
 	*x = (*x - *y) * cos(0.9);
 	*y = (*x + *y) * sin(0.9) - z;
 }
+
+// static void	rotate_x(int *y, int *z, double alpha)
+// {
+// 	int	previous_y;
+
+// 	previous_y = *y;
+// 	*y = previous_y * cos(alpha) + *z * sin(alpha);
+// 	*z = -previous_y * sin(alpha) + *z * cos(alpha);
+// }
+
+// static void	rotate_y(int *x, int *z, double beta)
+// {
+// 	int	previous_x;
+
+// 	previous_x = *x;
+// 	*x = previous_x * cos(beta) + *z * sin(beta);
+// 	*z = -previous_x * sin(beta) + *z * cos(beta);
+// }
+
+// void	iso(int *x, int *y, int z)
+// {
+// 	int	previous_x;
+// 	int	previous_y;
+
+// 	previous_x = *x;
+// 	previous_y = *y;
+// 	*x = (previous_x - previous_y) * cos(0.83599);
+// 	*y = -z + (previous_x + previous_y) * sin(0.599);
+// }
+
+// t_point	project(t_point p, t_fdf *fdf)
+// {
+// 	p.x *= fdf->camera->zoom;
+// 	p.y *= fdf->camera->zoom;
+// 	p.z *= fdf->camera->zoom / fdf->camera->z_divisor;
+// 	p.x -= (fdf->map->width * fdf->camera->zoom) / 2;
+// 	p.y -= (fdf->map->height * fdf->camera->zoom) / 2;
+// 	rotate_x(&p.y, &p.z, fdf->camera->alpha);
+// 	rotate_y(&p.x, &p.z, fdf->camera->beta);
+// 	if (fdf->camera->projection == threeD)
+// 		iso(&p.x, &p.y, p.z);
+// 	p.x += WIDTH / 2 + fdf->camera->x_offset;
+// 	p.y += HEIGHT / 2 + fdf->camera->y_offset;
+// 	return (p);
+// }
 
 void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 {
@@ -74,10 +119,10 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	xe += loco->shift_x;
 	ye += loco->shift_y;
 	//----------center---------
-	xs += 950;
-	ys += 0;
-	xe += 950;
-	ye += 0;
+	// xs += 950;
+	// ys += 10;
+	// xe += 950;
+	// ye += 10;
 
 	
 	x_delta = xe - xs;
@@ -96,22 +141,22 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 		my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
-		if (xs < 0 || ys < 0)
-		{
-			loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
-			loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-			loco->zoom -= 1;
-			// mlx_clear_window(loco->mlx, loco->win);
-			manage_points(loco);
-		}
-		if (xs > WIDTH || ys > HEIGHT)
-		{
-			loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
-			loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-			loco->zoom -= 1;
-			// mlx_clear_window(loco->mlx, loco->win);
-			manage_points(loco);
-		}
+		// if (xs < 0 || ys < 0)
+		// {
+		// 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
+		// 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
+		// 	loco->zoom -= 1;
+		// 	// mlx_clear_window(loco->mlx, loco->win);
+		// 	manage_points(loco);
+		// }
+		// if (xs > WIDTH || ys > HEIGHT)
+		// {
+		// 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
+		// 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
+		// 	loco->zoom -= 1;
+		// 	// mlx_clear_window(loco->mlx, loco->win);
+		// 	manage_points(loco);
+		// }
 
 	}
 }

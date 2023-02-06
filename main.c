@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/05 21:58:20 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:33:11 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
 {
 	char	*dst;
 
+	if (x >= WIDTH || x <= 0 || y >= HEIGHT || y <= 0)
+		return ;
 	dst = loco->addr + (y * loco->line_length + x * (loco->bpp / 8));
 	*(unsigned int*)dst = color;
 }
@@ -207,7 +209,7 @@ int	main(int ac, char **av)
 	zoom->width = loco->width;
 	zoom_check(zoom);
 	loco->zoom = zoom->zoom;
-	// loco->zoom = 81;
+	// loco->zoom = 10;
 	manage_points(loco);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
 	mlx_hook(loco->win, 17, 0L, close_me, loco);
