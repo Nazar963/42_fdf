@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/06 21:33:41 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:20:20 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,23 +141,10 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 		my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
-		// if (xs < 0 || ys < 0)
-		// {
-		// 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
-		// 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-		// 	loco->zoom -= 1;
-		// 	// mlx_clear_window(loco->mlx, loco->win);
-		// 	manage_points(loco);
-		// }
-		// if (xs > WIDTH || ys > HEIGHT)
-		// {
-		// 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
-		// 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-		// 	loco->zoom -= 1;
-		// 	// mlx_clear_window(loco->mlx, loco->win);
-		// 	manage_points(loco);
-		// }
-
+		if (xs < 0 || ys < 0)
+			break ;
+		if (xs > WIDTH || ys > HEIGHT)
+			break ;
 	}
 }
 
