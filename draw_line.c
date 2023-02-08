@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/07 13:20:20 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:40:27 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,51 +34,6 @@ void	isometric_projection(float *x, float *y, int z)
 	*y = (*x + *y) * sin(0.9) - z;
 }
 
-// static void	rotate_x(int *y, int *z, double alpha)
-// {
-// 	int	previous_y;
-
-// 	previous_y = *y;
-// 	*y = previous_y * cos(alpha) + *z * sin(alpha);
-// 	*z = -previous_y * sin(alpha) + *z * cos(alpha);
-// }
-
-// static void	rotate_y(int *x, int *z, double beta)
-// {
-// 	int	previous_x;
-
-// 	previous_x = *x;
-// 	*x = previous_x * cos(beta) + *z * sin(beta);
-// 	*z = -previous_x * sin(beta) + *z * cos(beta);
-// }
-
-// void	iso(int *x, int *y, int z)
-// {
-// 	int	previous_x;
-// 	int	previous_y;
-
-// 	previous_x = *x;
-// 	previous_y = *y;
-// 	*x = (previous_x - previous_y) * cos(0.83599);
-// 	*y = -z + (previous_x + previous_y) * sin(0.599);
-// }
-
-// t_point	project(t_point p, t_fdf *fdf)
-// {
-// 	p.x *= fdf->camera->zoom;
-// 	p.y *= fdf->camera->zoom;
-// 	p.z *= fdf->camera->zoom / fdf->camera->z_divisor;
-// 	p.x -= (fdf->map->width * fdf->camera->zoom) / 2;
-// 	p.y -= (fdf->map->height * fdf->camera->zoom) / 2;
-// 	rotate_x(&p.y, &p.z, fdf->camera->alpha);
-// 	rotate_y(&p.x, &p.z, fdf->camera->beta);
-// 	if (fdf->camera->projection == threeD)
-// 		iso(&p.x, &p.y, p.z);
-// 	p.x += WIDTH / 2 + fdf->camera->x_offset;
-// 	p.y += HEIGHT / 2 + fdf->camera->y_offset;
-// 	return (p);
-// }
-
 void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 {
 	float x_delta;
@@ -90,13 +45,22 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	z = loco->grid[(int)ys][(int)xs];
 	z1 = loco->grid[(int)ye][(int)xe];
 
+	if (z > 0)
+		z += 100;
+	else if (z < 0)
+		z -= 100;
+	if (z1 > 0)
+		z1 += 100;
+	else if (z1 < 0)
+		z1 -= 100;
+
 	//----------color----------
 	if (z || z1)
 	{
 		if (loco->color_grid[(int)ys][(int)xs] != 0)
 			loco->color = loco->color_grid[(int)ys][(int)xs]; // 16711680 blue
 		else
-			loco->color = 0xffd700;
+			loco->color = 0xffd700; // 0xffd700
 	}
 	else
 	{
@@ -137,8 +101,8 @@ void	draw(float xs, float ys, float xe, float ye, t_data *loco)
 	y_delta /= max;
 	while ((int)(xs - xe) || (int)(ys - ye))
 	{
-		// mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
-		my_mlx_pixel_put(loco, xs, ys, loco->color);
+		mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
+		// my_mlx_pixel_put(loco, xs, ys, loco->color);
 		xs += x_delta;
 		ys += y_delta;
 		if (xs < 0 || ys < 0)
@@ -168,5 +132,3 @@ void	manage_points(t_data *loco)
 		y++;
 	}
 }
-
-

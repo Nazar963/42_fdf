@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:19:12 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/01 20:25:51 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:47:27 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int		get_width(char *path)
 	int		width;
 	int		fd;
 	char	*line;
-	int		holder;
+	// int		holder;
 
-	holder = 0;
+	// holder = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
@@ -50,13 +50,20 @@ int		get_width(char *path)
 	}
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		width = counter(line, ' ');
-		if (width > holder)
-			holder = width;
+		if (line[ft_strlen(line)] == ' ')
+		{
+			width = counter(line, ' ');
+			width--;
+		}
+		else
+			width = counter(line, ' ');
+		// if (width > holder)
+		// 	holder = width;
 		free(line);
 	}
 	close(fd);
-	return (holder);
+	// return (holder);
+	return (width);
 }
 
 void	fill(int *num_line, int *color_line, char *line)

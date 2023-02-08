@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:40:30 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/30 10:15:22 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:59:05 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	counter(char *str, char c)
 		while (str[i] != c && str[i] != '\0')
 			i++;
 	}
+	if (str[i - 2] == ' ')
+		words--;
 	return (words);
 }
 
