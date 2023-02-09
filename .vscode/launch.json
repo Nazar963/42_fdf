@@ -8,7 +8,7 @@
             "type": "cppdbg",
             "request": "launch",
             "name": "Launch Program",
-            "args":["maps/pyra.fdf"],
+            "args":["maps/nizz.fdf"],
             "cwd": "${workspaceFolder}",   
             "program": "${workspaceFolder}/a.out"
         }

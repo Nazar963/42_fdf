@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:19:12 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/07 15:47:27 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:57:23 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,50 +110,30 @@ void    open_file(char *path, t_data *loco)
 
 	loco->height = get_height(path);
 	loco->width = get_width(path);
-	if (loco->height == 0 || loco->width == 0)
-	{
-		ft_close(loco);
-		exit(EXIT_FAILURE);
-	}
 	loco->grid = (int **)malloc((loco->height + 1) * sizeof(int*));
 	if (!loco->grid)
-	{
-		ft_close(loco);
-		exit(EXIT_FAILURE);
-	}
+		return (0);
 	loco->color_grid = (int **)malloc((loco->height + 1) * sizeof(int*));
 	if (!loco->color_grid)
-	{
-		ft_close(loco);
-		exit(EXIT_FAILURE);
-	}
+		return (0);
 	i = 0;
 	while (i <= loco->height)
 	{
 		loco->grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
 		if (!loco->grid[i - 1])
-		{
-			ft_close(loco);
-			exit(EXIT_FAILURE);
-		}
+			return (0);
 	}
 	i = 0;
 	while (i <= loco->height)
 	{
 		loco->color_grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
 		if (!loco->color_grid[i - 1])
-		{
-			ft_close(loco);
-			exit(EXIT_FAILURE);
-		}
+			return (0);
 	}
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_close(loco);
-		exit(EXIT_FAILURE);
-	}
+		return (0);
 	i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{

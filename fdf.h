@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/05 21:48:00 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:13:44 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_atoi_base(const char *str, int base);
 int	ft_close(t_data *loco);
 int	deal_key(int key, t_data *loco);
 void	my_mlx_pixel_put(t_data *loco, int x, int y, int color);
-void	zoom_check(t_zoom *zoom);
 int	main(int ac, char **av);
 
 void	draw(float xs, float ys, float xe, float ye, t_data *loco);
