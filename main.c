@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/09 21:48:33 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:53:00 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ int	ft_close(t_data *loco)
 		free(loco->color_grid);
 	}
 	mlx_destroy_image(loco->mlx, loco->img);
-	mlx_destroy_window(loco->mlx, loco->win);
+	if (loco->mlx && loco->win)
+		mlx_destroy_window(loco->mlx, loco->win);
 	mlx_destroy_display(loco->mlx);
 	free(loco->mlx);
 	free(loco->win);
+	free(loco->fata);
 	free(loco);
 	exit(0);
 }
@@ -65,9 +67,6 @@ int	deal_key(int key, t_data *loco)
 		loco->shift_x += 40;
 	if (key == 65307)
 	{
-		mlx_clear_window(loco->mlx, loco->win);
-		mlx_destroy_window(loco->mlx, loco->win);
-		mlx_destroy_display(loco->mlx);
 		ft_close(loco);
 		exit(0);
 	}
@@ -88,7 +87,7 @@ void	my_mlx_pixel_put(t_data *loco, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-static void	zoom_check(t_zoom *zoom, t_data *loco)
+static void	zoom_check(t_data *loco)
 {
 	int x;
 	int y;
@@ -98,29 +97,29 @@ static void	zoom_check(t_zoom *zoom, t_data *loco)
 	x = loco->width;
 	y = 0;
 	//----------zoom-----------
-	x *= zoom->zoom;
+	x *= loco->fata->zoom;
 
 	x = (x - y) * cos(0.9);
 	//----------center---------
 	x += 950;
 	while (x > 1920)
 	{
-		x = zoom->width;
+		x = loco->fata->width;
 		//----------zoom-----------
-		x *= zoom->zoom;
+		x *= loco->fata->zoom;
 		x = (x - y) * cos(0.9);
 		//----------center---------
 		x += 950;
-		zoom->zoom--;
+		loco->fata->zoom--;
 	}
 
 	//---------- for the y --------
-	x = zoom->width;
-	y = zoom->height;
+	x = loco->fata->width;
+	y = loco->fata->height;
 	// z = loco->grid[(int)y][(int)x];
 	//----------zoom-----------
-	x *= zoom->zoom;
-	y *= zoom->zoom;
+	x *= loco->fata->zoom;
+	y *= loco->fata->zoom;
 
 	x = (x - y) * cos(0.9);
 	y = (x + y) * sin(0.9);
@@ -128,48 +127,48 @@ static void	zoom_check(t_zoom *zoom, t_data *loco)
 	x += 950;
 	while (x > WIDTH || y > HEIGHT)
 	{
-		x = zoom->width;
-		y = zoom->height;
+		x = loco->fata->width;
+		y = loco->fata->height;
 		//----------zoom-----------
-		x *= zoom->zoom;
-		y *= zoom->zoom;
+		x *= loco->fata->zoom;
+		y *= loco->fata->zoom;
 		
 		x = (x - y) * cos(0.9);
 		y = (x + y) * sin(0.9);
 		//----------center---------
 		x += 950;
-		zoom->zoom--;
+		loco->fata->zoom--;
 	}
 }
 
 int	main(int ac, char **av)
 {
 	t_data	*loco;
-	t_zoom	*zoom;
 
 	if (ac != 2)
 		exit(EXIT_FAILURE);
 	loco = (t_data *)malloc(sizeof(t_data));
 	if (!loco)
 		exit(EXIT_FAILURE);
-	zoom = (t_zoom *)malloc(sizeof(t_zoom));
-	if (!zoom)
+	loco->fata = (t_zoom *)malloc(sizeof(t_zoom));
+	if (!loco->fata)
 		return (0);
 	open_file(av[1], loco);
 	loco->mlx = mlx_init();
 	loco->win = mlx_new_window(loco->mlx, WIDTH, HEIGHT, "/|/|<< FDF");
 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
-	zoom->zoom = 100;
-	zoom->height = loco->height;
-	zoom->width = loco->width;
-	zoom_check(zoom, loco);
-	loco->zoom = zoom->zoom;
+	loco->fata->zoom = 100;
+	loco->fata->height = loco->height;
+	loco->fata->width = loco->width;
+	zoom_check(loco);
+	loco->zoom = loco->fata->zoom;
 	// loco->zoom = 10;
 	manage_points(loco);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
 	mlx_hook(loco->win, 17, 0L, close_me, (void *)loco);
-	mlx_hook(loco->win, 2, 1L<<0, deal_key, loco);
+	mlx_hook(loco->win, 2, 1L << 0, deal_key, loco);
 	// mlx_key_hook(loco->win, deal_key, loco);
 	mlx_loop(loco->mlx);
+	return (0);
 }

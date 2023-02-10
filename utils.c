@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:40:30 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/07 15:59:05 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:19:47 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ int	counter(char *str, char c)
 	int words;
 
 	words = 0;
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
-		while (str[i] == c && str[i] != '\0')
-			i++;
-		if (str[i])
+		if (str[i] != c && str[i] != '\0' && str[i] != '\n')
+		{
 			words++;
-		while (str[i] != c && str[i] != '\0')
-			i++;
+			while (str[i] != c && str[i] != '\0')
+				i++;
+		}
+		if (str[i] == '\0')
+			break ;
 	}
-	if (str[i - 2] == ' ')
-		words--;
 	return (words);
 }
 
