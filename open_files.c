@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:19:12 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/10 21:59:56 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:42:44 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,10 @@ void	fill(int *num_line, int *color_line, char *line)
 	j = 0;
 	while (res[i])
 	{
-		printf("%s\n", res[i]);
 		if (ft_strchr(res[i], ',') != NULL)
 		{
 			helper_color = ft_split(res[i], ',');
 			num_line[i] = ft_atoi(helper_color[0]);
-			printf("\033[0;31m");
-			printf("%d\n", num_line[i]);
-			printf("\033è0;37m");
 			color_line[i] = ft_atoi_base(helper_color[1], 16);
 			while (helper_color[j])
 			{
@@ -94,19 +90,21 @@ void	fill(int *num_line, int *color_line, char *line)
 				j++;
 			}
 			free(helper_color);
-			free(res[i]);
-			res[i] = NULL;
 		}
 		else
 		{
 			num_line[i] = ft_atoi(res[i]);
-			color_line[i] = 0;
-			free(res[i]);
-			res[i] = NULL;
+			color_line[i] = ft_atoi("0");
 		}
-		// printf("\033[0;31m");
-		// printf("%d\n", num_line[i]);
-		// printf("\033[0m");
+		free(res[i]);
+		res[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (res[i])
+	{
+		free(res[i]);
+		res[i] = NULL;
 		i++;
 	}
 	free(res);
@@ -125,26 +123,25 @@ void    open_file(char *path, t_data *loco)
 		return ;
 	loco->color_grid = (int **)malloc((loco->height + 1) * sizeof(int*));
 	if (!loco->color_grid)
-		return ;
+		ft_close(loco);
 	i = 0;
-	while (i <= loco->height)
+	while (i < loco->height)
 	{
 		loco->grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
 		if (!loco->grid[i - 1])
-			return ;
+			ft_close(loco);
 	}
 	i = 0;
-	while (i <= loco->height)
+	while (i < loco->height)
 	{
 		
 		loco->color_grid[i++] = (int *)malloc(sizeof(int) * (loco->width + 1));
 		if (!loco->color_grid[i - 1])
-			return ;
+			ft_close(loco);
 	}
-
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return ;
+		ft_close(loco);
 	i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -152,6 +149,7 @@ void    open_file(char *path, t_data *loco)
 		free(line);
 		i++;
 	}
+	// free(line);
 	close(fd);
 	loco->grid[i] = NULL;
 	loco->color_grid[i] = NULL;

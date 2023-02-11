@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/10 21:53:00 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:45:37 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	close_me(t_data *loco)
 {
 	ft_close(loco);
 	exit(0);
-	return (0);
 }
 
 int	ft_close(t_data *loco)
@@ -24,31 +23,23 @@ int	ft_close(t_data *loco)
 	int	i;
 
 	i = 0;
-	if (loco->grid)
+	while (i <= loco->height)
 	{
-		while (i <= loco->height)
-		{
-			free(loco->grid[i]);
-			i++;
-		}
-		free(loco->grid);
+		free(loco->grid[i]);
+		i++;
 	}
+	free(loco->grid);
 	i = 0;
-	if (loco->color_grid)
+	while (i <= loco->height)
 	{
-		while (i <= loco->height)
-		{
-			free(loco->color_grid[i]);
-			i++;
-		}
-		free(loco->color_grid);
+		free(loco->color_grid[i]);
+		i++;
 	}
+	free(loco->color_grid);
 	mlx_destroy_image(loco->mlx, loco->img);
-	if (loco->mlx && loco->win)
-		mlx_destroy_window(loco->mlx, loco->win);
+	mlx_destroy_window(loco->mlx, loco->win);
 	mlx_destroy_display(loco->mlx);
 	free(loco->mlx);
-	free(loco->win);
 	free(loco->fata);
 	free(loco);
 	exit(0);
@@ -70,6 +61,8 @@ int	deal_key(int key, t_data *loco)
 		ft_close(loco);
 		exit(0);
 	}
+	if (loco->img)
+		mlx_destroy_image(loco->mlx, loco->img);
 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
@@ -147,6 +140,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		exit(EXIT_FAILURE);
+	loco = NULL;
 	loco = (t_data *)malloc(sizeof(t_data));
 	if (!loco)
 		exit(EXIT_FAILURE);
@@ -156,6 +150,7 @@ int	main(int ac, char **av)
 	open_file(av[1], loco);
 	loco->mlx = mlx_init();
 	loco->win = mlx_new_window(loco->mlx, WIDTH, HEIGHT, "/|/|<< FDF");
+	loco->img = NULL;
 	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
 	loco->addr = mlx_get_data_addr(loco->img ,&loco->bpp, &loco->line_length, &loco->endian);
 	loco->fata->zoom = 100;
@@ -167,7 +162,7 @@ int	main(int ac, char **av)
 	manage_points(loco);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);
 	mlx_hook(loco->win, 17, 0L, close_me, (void *)loco);
-	mlx_hook(loco->win, 2, 1L << 0, deal_key, loco);
+	mlx_hook(loco->win, 2, 1L << 0, deal_key, (void *)loco);
 	// mlx_key_hook(loco->win, deal_key, loco);
 	mlx_loop(loco->mlx);
 	return (0);

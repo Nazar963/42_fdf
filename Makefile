@@ -6,19 +6,19 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 20:01:55 by naal-jen          #+#    #+#              #
-#    Updated: 2023/02/10 22:00:18 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/02/11 18:36:34 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 WFLAGS = -Wall -Werror -Wextra
 AFLAGS = ar cr
-MFLAGS = -lasan -lXext -lX11 -lm -lz
+MFLAGS = -lXext -lX11 -lm -lz
 CFILES = main.c open_files.c utils.c draw_line.c
 OFILES = main.o open_files.o utils.o draw_line.o
 NAME = fdf.a
 
-all: make $(NAME) compile
+all: make $(NAME) $(OFILES) compile
 
 make:
 	cd gnl; \
@@ -34,7 +34,7 @@ $(NAME): $(OFILES)
 	$(AFLAGS) $(NAME) $(OFILES)
 
 $(OFILES): $(CFILES)
-	$(CC) -fsanitize=address -g -c $(WFLAGS) $(CFILES)
+	$(CC) -g -c $(WFLAGS) $(CFILES)
 
 compile:
 	$(CC) $(OFILES) gnl/get_next_line.a libft/libft.a minilibx-linux/libmlx.a $(MFLAGS)

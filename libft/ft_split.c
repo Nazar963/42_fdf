@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:45:28 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/01/23 22:48:54 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:42:16 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	split[num_of_strings] = NULL;
 	split = creat_splits(s, split, c);
-	if (creat_splits(s, split, c) == NULL)
+	if (split == NULL)
 	{
 		flip = split;
 		while (*flip)
