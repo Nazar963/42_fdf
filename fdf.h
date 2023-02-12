@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/10 17:26:16 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:02:03 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct s_zoom
 
 typedef struct s_data
 {
+	float	xs;
+	float	ys;
+	int		max;
+	int		z;
+	int		z1;
+
 	int		width;
 	int		height;
 	int		**grid;
@@ -64,19 +70,28 @@ typedef struct s_data
 
 void    open_file(char *path, t_data *loco);
 void	fill(int *num_line, int *color_line, char *line);
-int		get_width(char *path);
-int     get_height(char *path);
+void	get_width(char *path, t_data *loco);
+void    get_height(char *path, t_data *loco);
 
 int	counter(char *str, char c);
 int	ft_atoi_base(const char *str, int base);
 
-int	ft_close(t_data *loco);
 int	deal_key(int key, t_data *loco);
 void	my_mlx_pixel_put(t_data *loco, int x, int y, int color);
 int	main(int ac, char **av);
 
-void	draw(float xs, float ys, float xe, float ye, t_data *loco);
+void	draw(float xe, float ye, t_data *loco);
+// void	draw(float xs, float ys, float xe, float ye, t_data *loco);
 void	manage_points(t_data *loco);
 
+//--------------close.c------------------
+int		ft_close(t_data *loco);
+int		close_me(t_data *loco);
+
+//--------------map_utils.c--------------
+void	color(int *z, int *z1, t_data *loco);
+void	shift(float *xe, float *ye, t_data *loco);
+void	zoom(float *xe, float *ye, t_data *loco);
+void	center(float *xe, t_data *loco);
 
 #endif

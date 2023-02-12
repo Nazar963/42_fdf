@@ -6,49 +6,44 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:19:12 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/11 17:42:44 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:14:15 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int     get_height(char *path)
+void	get_height(char *path, t_data *loco)
 {
-	char    *line;
-	int     fd;
-	int     height;
+	char	*line;
+	int		fd;
+	int		height;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		return (0);
-		exit(EXIT_FAILURE);
-	}
+		ft_close(loco);
 	height = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		height++;
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
-	return (height);
+	loco->height = height;
 }
 
-int		get_width(char *path)
+void	get_width(char *path, t_data *loco)
 {
 	int		width;
 	int		fd;
 	char	*line;
-	// int		holder;
 
-	// holder = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		return(0);
-		exit(EXIT_FAILURE);
-	}
-	while ((line = get_next_line(fd)) != NULL)
+		ft_close(loco);
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		if (line[ft_strlen(line)] == ' ')
 		{
@@ -57,13 +52,11 @@ int		get_width(char *path)
 		}
 		else
 			width = counter(line, ' ');
-		// if (width > holder)
-		// 	holder = width;
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
-	// return (holder);
-	return (width);
+	loco->width = width;
 }
 
 void	fill(int *num_line, int *color_line, char *line)
@@ -116,8 +109,8 @@ void    open_file(char *path, t_data *loco)
 	char	*line;
 	int		i;
 
-	loco->height = get_height(path);
-	loco->width = get_width(path);
+	get_height(path, loco);
+	get_width(path, loco);
 	loco->grid = (int **)malloc((loco->height + 1) * sizeof(int*));
 	if (!loco->grid)
 		return ;

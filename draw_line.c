@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:38:59 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/09 19:31:21 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/12 20:52:22 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	max_num(float a, float b)
 		return (b);
 }
 
-static int mod(float a)
+static int	mod(float a)
 {
 	if (a < 0)
 		return (-a);
@@ -34,74 +34,31 @@ static void	isometric_projection(float *x, float *y, int z)
 	*y = (*x + *y) * sin(0.9) - z;
 }
 
-void	draw(float xs, float ys, float xe, float ye, t_data *loco)
+void	draw(float xe, float ye, t_data *loco)
 {
-	float x_delta;
-	float y_delta;
-	int	max;
-	int	z;
-	int	z1;
+	float	x_delta;
+	float	y_delta;
 
-	z = loco->grid[(int)ys][(int)xs];
-	z1 = loco->grid[(int)ye][(int)xe];
-
-	z *= loco->zoom / 3.5;
-	z1 *= loco->zoom / 3.5;
-
-	//----------color----------
-	if (z || z1)
+	loco->z = loco->grid[(int)loco->ys][(int)loco->xs];
+	loco->z1 = loco->grid[(int)ye][(int)xe];
+	color(&loco->z, &loco->z1, loco);
+	zoom(&xe, &ye, loco);
+	isometric_projection(&loco->xs, &loco->ys, loco->z);
+	isometric_projection(&xe, &ye, loco->z1);
+	shift(&xe, &ye, loco);
+	center(&xe, loco);
+	x_delta = xe - loco->xs;
+	y_delta = ye - loco->ys;
+	loco->max = max_num(mod(x_delta), mod(y_delta));
+	x_delta /= loco->max;
+	y_delta /= loco->max;
+	while ((int)(loco->xs - xe) || (int)(loco->ys - ye))
 	{
-		if (loco->color_grid[(int)ys][(int)xs] != 0)
-			loco->color = loco->color_grid[(int)ys][(int)xs]; // 16711680 blue
-		else
-			loco->color = 0xffd700; // 0xffd700
-	}
-	else
-	{
-		if (loco->color_grid[(int)ys][(int)xs] != 0)
-			loco->color = loco->color_grid[(int)ys][(int)xs]; // 16711680 blue
-		else
-			loco->color = 0xffffff;
-	}
-	//----------zoom-----------
-	xs *= loco->zoom;
-	ys *= loco->zoom;
-	xe *= loco->zoom;
-	ye *= loco->zoom;
-	//----------3D-------------
-	isometric_projection(&xs, &ys, z);
-	isometric_projection(&xe, &ye, z1);
-	//----------shift----------
-	xs += loco->shift_x;
-	ys += loco->shift_y;
-	xe += loco->shift_x;
-	ye += loco->shift_y;
-	//----------center---------
-	xs += 950;
-	// ys += 10;
-	xe += 950;
-	// ye += 10;
-
-	
-	x_delta = xe - xs;
-	y_delta = ye - ys;
-
-	max = max_num(mod(x_delta), mod(y_delta));
-	// if (fabsf(x_delta) > fabs(y_delta))
-	// 	max = fabsf(x_delta);
-	// else
-	// 	max = fabs(y_delta);
-	x_delta /= max;
-	y_delta /= max;
-	while ((int)(xs - xe) || (int)(ys - ye))
-	{
-		// mlx_pixel_put(loco->mlx, loco->win, xs, ys, loco->color);
-		my_mlx_pixel_put(loco, xs, ys, loco->color);
-		xs += x_delta;
-		ys += y_delta;
-		if (xs < 0 || ys < 0)
-			break ;
-		if (xs > WIDTH || ys > HEIGHT)
+		my_mlx_pixel_put(loco, loco->xs, loco->ys, loco->color);
+		loco->xs += x_delta;
+		loco->ys += y_delta;
+		if (loco->xs < 0 || loco->ys < 0
+			|| loco->xs > WIDTH || loco->ys > HEIGHT)
 			break ;
 	}
 }
@@ -118,9 +75,17 @@ void	manage_points(t_data *loco)
 		while (x < loco->width)
 		{
 			if (x < loco->width - 1)
-				draw(x, y, x + 1, y, loco);
+			{
+				loco->xs = x;
+				loco->ys = y;
+				draw(loco->xs + 1, loco->ys, loco);
+			}
 			if (y < loco->height - 1)
-				draw(x, y, x, y + 1, loco);
+			{
+				loco->xs = x;
+				loco->ys = y;
+				draw(loco->xs, loco->ys + 1, loco);
+			}
 			x++;
 		}
 		y++;

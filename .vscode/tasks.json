@@ -12,6 +12,8 @@
                 "-Iminilibx-linux",
                 "open_files.c",
                 "draw_line.c",
+                "close.c",
+                "map_utils.c",
                 "utils.c",
                 "${file}",
                 "minilibx-linux/libmlx.a",
@@ -24,7 +26,7 @@
                 "cwd": "${fileDirname}"
             },
             "problemMatcher": [
-                "$gcc"
+                "$cc"
             ],
             "group": {
                 "kind": "build",
