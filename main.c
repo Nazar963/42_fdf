@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:30:04 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/12 21:12:27 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:10:56 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	zoom_check(t_data *loco)
 	int	x;
 	int	y;
 
-	loco->fata->zoom = 100;
 	loco->fata->height = loco->height;
 	loco->fata->width = loco->width;
 	x = loco->fata->width;
@@ -104,7 +103,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		exit(EXIT_FAILURE);
-	if(ft_strnstr(av[1], ".fdf", ft_strlen(av[1])) == 0)
+	if (ft_strnstr(av[1], ".fdf", ft_strlen(av[1])) == 0)
 		exit(EXIT_FAILURE);
 	loco = (t_data *)malloc(sizeof(t_data));
 	if (!loco)
@@ -112,14 +111,11 @@ int	main(int ac, char **av)
 	loco->fata = (t_zoom *)malloc(sizeof(t_zoom));
 	if (!loco->fata)
 		exit(EXIT_FAILURE);
+	initialize(loco);
 	open_file(av[1], loco);
 	if (loco->height == 0 || loco->width == 0)
 		ft_close(loco);
-	loco->mlx = mlx_init();
-	loco->win = mlx_new_window(loco->mlx, WIDTH, HEIGHT, "/|/|<< FDF");
-	loco->img = mlx_new_image(loco->mlx, WIDTH, HEIGHT);
-	loco->addr = mlx_get_data_addr(loco->img, &loco->bpp, &loco->line_length,
-			&loco->endian);
+	map_init(loco);
 	zoom_check(loco);
 	manage_points(loco);
 	mlx_put_image_to_window(loco->mlx, loco->win, loco->img, 0, 0);

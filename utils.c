@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 19:40:30 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/10 16:19:47 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/13 09:51:58 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static int	ft_has_prefix(const char *str, int base)
 
 int	counter(char *str, char c)
 {
-	int i;
-	int words;
+	int	i;
+	int	words;
 
 	words = 0;
 	i = -1;

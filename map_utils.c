@@ -6,11 +6,28 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:52:39 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/12 20:53:03 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:59:03 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	free_matrix(void **ptr)
+{
+	int	i;
+
+	i = 0;
+	if (ptr != NULL)
+	{
+		while (ptr[i])
+		{
+			free(ptr[i]);
+			ptr[i] = NULL;
+			i++;
+		}
+		free(ptr);
+	}
+}
 
 void	color(int *z, int *z1, t_data *loco)
 {
@@ -21,7 +38,7 @@ void	color(int *z, int *z1, t_data *loco)
 		if (loco->color_grid[(int)loco->ys][(int)loco->xs] != 0)
 			loco->color = loco->color_grid[(int)loco->ys][(int)loco->xs];
 		else
-			loco->color = 0xffd700;
+			loco->color = 0xffffff;
 	}
 	else
 	{
