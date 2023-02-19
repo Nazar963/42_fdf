@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:57:51 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/02/13 17:06:06 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:04:31 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ void	center(float *xe, t_data *loco);
 void	map_init(t_data *loco);
 
 //-------------struct_initialize.c-------
-void    initialize(t_data *loco);
+void	initialize(t_data *loco);
 
 #endif
