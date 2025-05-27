@@ -1,9 +1,6 @@
-Here's a professional README.md template for your 42 FdF (Fil de Fer) project:
-
-```markdown
 # FdF 🔺
 
-[![42 School](https://img.shields.io/badge/42-School-blue)](https://www.42.fr/)
+[![42 Firenze](https://img.shields.io/badge/42-Firenze-blue)](https://42firenze.it/)
 [![GitHub license](https://img.shields.io/github/license/<your_username>/fdf)](https://github.com/<your_username>/fdf/blob/master/LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/<your_username>/fdf/build.yml?branch=master)](https://github.com/<your_username>/fdf/actions)
 [![Bonus](https://img.shields.io/badge/Bonus-Complete-brightgreen)](https://github.com/<your_username>/fdf)
