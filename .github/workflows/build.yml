@@ -9,33 +9,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
-    
+
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y xorg libxext-dev zlib1g-dev libbsd-dev libx11-dev
-    
-    - name: Build MiniLibX
-      run: |
-        cd minilibx-linux && make
-        
-    - name: Build libft
-      run: |
-        cd libft && make
-        
-    - name: Build gnl
-      run: |
-        cd gnl && make
-        
+
     - name: Build FdF
       run: |
         make
-        
+
     - name: Test build
       run: |
         file fdf | grep -q "ELF"
