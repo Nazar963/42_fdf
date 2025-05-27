@@ -2,11 +2,11 @@
 
 [![42 Firenze](https://img.shields.io/badge/42-Firenze-blue)](https://42firenze.it/)
 [![GitHub license](https://img.shields.io/github/license/Nazar963/42_fdf)](https://github.com/Nazar963/42_fdf/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/<your_username>/fdf/build.yml?branch=master)](https://github.com/<your_username>/fdf/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Nazar963/42_fdf/build.yml?branch=master)](https://github.com/Nazar963/42_fdf/actions)
 
 A 3D wireframe renderer that converts elevation maps into stunning colored landscapes using 42's MiniLibX graphics library.
 
-![FdF Example](https://raw.githubusercontent.com/<your_username>/fdf/master/images/sample.png)
+![FdF Example](https://raw.githubusercontent.com/Nazar963/42_fdf/master/images/sample.png)
 
 ## Table of Contents 📖
 - [Description](#description-)
@@ -61,8 +61,8 @@ FdF (Fil de Fer - "Wireframe") is a 42 School computer graphics project that:
 ### Compilation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your_username>/fdf.git
-   cd fdf
+   git clone https://github.com/Nazar963/42_fdf.git
+   cd 42_fdf
    ```
 2. Build the project:
    ```bash
