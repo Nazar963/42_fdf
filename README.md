@@ -1,9 +1,8 @@
 # FdF 🔺
 
 [![42 Firenze](https://img.shields.io/badge/42-Firenze-blue)](https://42firenze.it/)
-[![GitHub license](https://img.shields.io/github/license/<your_username>/fdf)](https://github.com/<your_username>/fdf/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/Nazar963/42_fdf)](https://github.com/Nazar963/42_fdf/blob/master/LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/<your_username>/fdf/build.yml?branch=master)](https://github.com/<your_username>/fdf/actions)
-[![Bonus](https://img.shields.io/badge/Bonus-Complete-brightgreen)](https://github.com/<your_username>/fdf)
 
 A 3D wireframe renderer that converts elevation maps into stunning colored landscapes using 42's MiniLibX graphics library.
 
