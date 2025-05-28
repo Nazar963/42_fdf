@@ -2,9 +2,9 @@
 
 [![42 Firenze](https://img.shields.io/badge/42-Firenze-blue)](https://42firenze.it/)
 [![GitHub license](https://img.shields.io/github/license/Nazar963/42_fdf)](https://github.com/Nazar963/42_fdf/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/Nazar963/42_fdf/build.yml?branch=master)](https://github.com/Nazar963/42_fdf/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Nazar963/42_fdf/.github/workflows/build.yml?branch=master)](https://github.com/Nazar963/42_fdf/.github/workflows/build.yml)
 
-A 3D wireframe renderer that converts elevation maps into stunning colored landscapes using 42's MiniLibX graphics library.
+A 3D wireframe renderer that converts elevation maps into stunning landscapes using 42's MiniLibX graphics library.
 
 ![FdF Example](https://raw.githubusercontent.com/Nazar963/42_fdf/master/images/sample.png)
 
