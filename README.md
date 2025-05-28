@@ -95,8 +95,14 @@ Included test maps:
 - Bresenham's line algorithm
 - Computer Graphics: Principles & Practice
 
+## 🤝 Contributing
+Feel free to submit issues or pull requests if you have suggestions for improving the test suite or adding more test cases.
+
 ## License
 This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+## 📧 Contact
+For questions or feedback, please open an issue in the repository.
 
 ---
 ⭐ **Star this repository if you found it helpful!**  
@@ -105,3 +111,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) for deta
 🖌️ **Bringing Mathematics to Life!**  
 [![42 School](https://img.shields.io/badge/42-profile-blue)](https://profile-v3.intra.42.fr/users/naal-jen)
 [![GitHub Profile](https://img.shields.io/badge/GitHub-Nazar963-lightgrey)](https://github.com/Nazar963)
+
+---
+Good luck with your FdF project at 42! 🚀
+
